@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spinner Wheel</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Custom Spinner Wheel</h1>
+    
+    <div id="name-inputs">
+        <input type="text" id="name" placeholder="Enter a name">
+        <button onclick="addName()">Add Name</button>
+    </div>
+
+    <ul id="name-list"></ul>
+
+    <canvas id="wheelCanvas" width="400" height="400"></canvas>
+    <button id="spinButton" onclick="spinWheel()">Spin</button>
+
+    <script src="wheel.js"></script>
+</body>
+</html>
