@@ -3,7 +3,7 @@ body {
     text-align: center;
 }
 canvas {
-    border: 2px solid black;
+    border: none;
     margin-top: 20px;
 }
 button {
