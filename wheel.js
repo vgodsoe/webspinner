@@ -83,37 +83,42 @@ function spinWheel() {
     });
 }
 
-// Determine the winner based on which wedge is at the top
 function determineWinner() {
-    const numSlices = names.length;
-    if (numSlices === 0) return;
+    if (names.length === 0) return;
 
-    const finalAngle = (currentRotation % 360); // Normalize angle between 0-360
+    const numSlices = names.length;
     const anglePerSlice = 360 / numSlices;
 
-    // Calculate the index, adding half the slice size for better alignment
-    const index = Math.round((finalAngle + 90 + anglePerSlice / 2) / anglePerSlice) % names.length;
+    // Normalize finalAngle within [0, 360)
+    let finalAngle = (currentRotation % 360);
 
-    // Show the notification or alert
-    // alert(`Eliminated: ${names[index]} at index ${index}, current rotation: ${currentRotation}, final angle: ${finalAngle}, names: ${names}`);
-    alert(`Eliminated: ${names[index]}!`);
+    // Adjust finalAngle to account for the 90-degree starting position
+    let alignment = (finalAngle + 90) % 360;
 
-    // Remove the selected name
+    // Calculate the index by dividing alignment by the angle per slice
+    const index = Math.floor((360 - alignment) / anglePerSlice);
+
+    // Show the result
+    alert(`Eliminated: ${names[index]} at index ${index}, final angle: ${finalAngle}. Names list: ${names}. Current Rotation: ${currentRotation}. Angle per slice: ${anglePerSlice}. Alignment: ${alignment}`);
+
+    // Remove the eliminated name
     names.splice(index, 1);
     updateNameList();
-    drawWheel();
 
+    // If only one name is left, declare the winner
     if (names.length === 1) {
-        // Declare the winner when only one name is left
         alert(`Winner: ${names[0]}! 🎉`);
+        drawWheel();
     } else {
-        // Adjust the current rotation to continue spinning
-        // For example, to continue spinning to the next name, add 360 degrees to the rotation:
-        currentRotation += 360;
+        // Reset rotation for the next spin to start from 0 degrees
+        currentRotation = 0;
+        // Reset the actual visual rotation of the canvas
+        canvas.style.transform = `rotate(0deg)`;
+        drawWheel();
     }
 }
 
-
+drawWheel();
 
 // alert(`Eliminated: ${names[index]} at index ${index} and final angle ${finalAngle}`);
 
@@ -136,4 +141,4 @@ function determineWinner() {
 // }
 
 // Initial Draw
-drawWheel();
+

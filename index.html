@@ -6,20 +6,105 @@
     <title>Spinner Wheel</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .wheel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            pointer-events: none;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid black;
+            position: absolute;
+            top: -30px; /* Places it just above the canvas */
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #spinButton {
+            margin-top: 20px;
+        }
+
+        #name-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        #name-list li {
+            margin: 5px 0;
+        }
+    </style>
 </head>
 <body>
     <h1>Custom Spinner Wheel</h1>
     
     <div id="name-inputs">
-        <input type="text" id="name" placeholder="Enter a name">
-        <button onclick="addName()">Add Name</button>
+        <input type="text" id="name" placeholder="Enter a name" aria-label="Enter a name">
+        <button onclick="addName()" aria-label="Add Name">Add Name</button>
     </div>
 
     <ul id="name-list"></ul>
 
-    <canvas id="wheelCanvas" width="400" height="400"></canvas>
-    <button id="spinButton" onclick="spinWheel()">Spin</button>
+    <div class="wheel-container">
+        <div class="arrow"></div> <!-- Arrow element -->
+        <canvas id="wheelCanvas" width="400" height="400"></canvas>
+    </div>
 
+    <button id="spinButton" onclick="spinWheel()" aria-label="Spin the Wheel">Spin</button>
+
+    <script>
+        function updateArrowPosition() {
+            const nameList = document.getElementById("name-list");
+            const wheelContainer = document.querySelector(".wheel-container");
+            const arrow = document.querySelector(".arrow");
+
+            // Get the total height of the name list
+            const nameListHeight = nameList.offsetHeight;
+
+            // Adjust the arrow's position based on the list height
+            const baseOffset = -25; // Base distance from the list
+            arrow.style.top = `${-30 - nameListHeight - baseOffset}px`;
+        }
+
+        function addName() {
+            const nameInput = document.getElementById("name");
+            const nameList = document.getElementById("name-list");
+
+            if (nameInput.value.trim() === "") return;
+
+            const li = document.createElement("li");
+            li.textContent = nameInput.value;
+            nameList.appendChild(li);
+
+            nameInput.value = "";
+            updateArrowPosition(); // Update arrow position when a new name is added
+        }
+
+        function removeName() {
+            const nameList = document.getElementById("name-list");
+            if (nameList.children.length > 0) {
+                nameList.removeChild(nameList.lastChild);
+                updateArrowPosition(); // Update arrow when a name is removed
+            }
+        }
+
+        // Initial call in case there are names preloaded
+        updateArrowPosition();
+    </script>
     <script src="wheel.js"></script>
 </body>
 </html>

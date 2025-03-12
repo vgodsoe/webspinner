@@ -11,3 +11,22 @@ button {
     padding: 10px;
     cursor: pointer;
 }
+
+/* Add this CSS to your styles.css or within the <style> tag in your HTML */
+.arrow {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid black;
+    position: absolute;
+    top: 50px; /* Adjust this value to position the arrow */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* #wheel-container {
+    pointer-events: none;
+    margin-bottom: 20px;
+    overflow: hidden;
+} */
