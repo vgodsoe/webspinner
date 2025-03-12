@@ -5,21 +5,176 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spinner Wheel</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #name-inputs {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #name {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            width: 250px;
+        }
+
+        #name-inputs button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #name-inputs button:hover {
+            background-color: #45a049;
+        }
+
+        #name-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            width: 300px;
+        }
+
+        #name-list li {
+            padding: 10px;
+            background-color: #fff;
+            margin: 5px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        #name-list li:hover {
+            background-color: #f1f1f1;
+        }
+
+        .wheel-container {
+            position: relative;
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid #333;
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #wheelCanvas {
+            border-radius: 50%;
+            border: 5px solid black;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #spinButton {
+            padding: 12px 25px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        #spinButton:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h1>Custom Spinner Wheel</h1>
+    <h1>Elimination Spinner Wheel</h1>
     
     <div id="name-inputs">
-        <input type="text" id="name" placeholder="Enter a name">
-        <button onclick="addName()">Add Name</button>
+        <input type="text" id="name" placeholder="Enter a name" aria-label="Enter a name">
+        <button onclick="addName()" aria-label="Add Name">Add Name</button>
     </div>
 
     <ul id="name-list"></ul>
 
-    <canvas id="wheelCanvas" width="400" height="400"></canvas>
-    <button id="spinButton" onclick="spinWheel()">Spin</button>
+    <div class="wheel-container">
+        <div class="arrow"></div> <!-- Arrow element -->
+        <canvas id="wheelCanvas" width="400" height="400"></canvas>
+    </div>
 
+    <button id="spinButton" onclick="spinWheel()" aria-label="Spin the Wheel">Spin</button>
+
+    <script>
+        function updateArrowPosition() {
+            const nameList = document.getElementById("name-list");
+            const wheelContainer = document.querySelector(".wheel-container");
+            const arrow = document.querySelector(".arrow");
+
+            // Get the total height of the name list
+            const nameListHeight = nameList.offsetHeight;
+
+            // Adjust the arrow's position based on the list height
+            const baseOffset = -10; // Base distance from the list
+            arrow.style.top = `${-30 - nameListHeight - baseOffset}px`;
+        }
+
+        function addName() {
+            const nameInput = document.getElementById("name");
+            const nameList = document.getElementById("name-list");
+
+            if (nameInput.value.trim() === "") return;
+
+            const li = document.createElement("li");
+            li.textContent = nameInput.value;
+            nameList.appendChild(li);
+
+            nameInput.value = "";
+            updateArrowPosition(); // Update arrow position when a new name is added
+        }
+
+        function removeName() {
+            const nameList = document.getElementById("name-list");
+            if (nameList.children.length > 0) {
+                nameList.removeChild(nameList.lastChild);
+                updateArrowPosition(); // Update arrow when a name is removed
+            }
+        }
+
+        // Initial call in case there are names preloaded
+        updateArrowPosition();
+    </script>
     <script src="wheel.js"></script>
 </body>
 </html>
