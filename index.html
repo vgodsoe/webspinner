@@ -5,16 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spinner Wheel</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        .wheel-container {
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: relative;
-            pointer-events: none;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #333;
             margin-bottom: 20px;
-            overflow: hidden;
+        }
+
+        #name-inputs {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #name {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            width: 250px;
+        }
+
+        #name-inputs button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #name-inputs button:hover {
+            background-color: #45a049;
+        }
+
+        #name-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            width: 300px;
+        }
+
+        #name-list li {
+            padding: 10px;
+            background-color: #fff;
+            margin: 5px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        #name-list li:hover {
+            background-color: #f1f1f1;
+        }
+
+        .wheel-container {
+            position: relative;
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .arrow {
@@ -22,35 +89,38 @@
             height: 0;
             border-left: 20px solid transparent;
             border-right: 20px solid transparent;
-            border-top: 20px solid black;
+            border-top: 20px solid #333;
             position: absolute;
-            top: -30px; /* Places it just above the canvas */
+            top: -30px;
             left: 50%;
             transform: translateX(-50%);
         }
 
-        .center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        #wheelCanvas {
+            border-radius: 50%;
+            border: 5px solid black;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
 
         #spinButton {
+            padding: 12px 25px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
             margin-top: 20px;
+            transition: background-color 0.3s ease;
         }
 
-        #name-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        #name-list li {
-            margin: 5px 0;
+        #spinButton:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <h1>Custom Spinner Wheel</h1>
+    <h1>Elimination Spinner Wheel</h1>
     
     <div id="name-inputs">
         <input type="text" id="name" placeholder="Enter a name" aria-label="Enter a name">
@@ -76,7 +146,7 @@
             const nameListHeight = nameList.offsetHeight;
 
             // Adjust the arrow's position based on the list height
-            const baseOffset = -25; // Base distance from the list
+            const baseOffset = -10; // Base distance from the list
             arrow.style.top = `${-30 - nameListHeight - baseOffset}px`;
         }
 

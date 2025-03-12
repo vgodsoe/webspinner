@@ -58,7 +58,11 @@ function drawWheel() {
         ctx.fillText(names[i], radius - 20, 5);
         ctx.restore();
     }
+
+    // Apply the rotation as per the updated currentRotation
+    canvas.style.transform = `rotate(${currentRotation}deg)`; // Correct rotation applied
 }
+
 
 // Spin the wheel
 function spinWheel() {
@@ -66,22 +70,24 @@ function spinWheel() {
 
     spinning = true;
     let randomSpin = Math.floor(2000 + Math.random() * 3000);
-    
+
     gsap.to({}, {
         duration: 2,
         onUpdate: function() {
             let progress = this.progress();
             let rotation = currentRotation + progress * randomSpin;
-            canvas.style.transform = `rotate(${rotation}deg)`;
+            canvas.style.transform = `rotate(${rotation}deg)`; // Visual spin
         },
         ease: "power4.out",
         onComplete: function() {
             spinning = false;
-            currentRotation += randomSpin;
+            currentRotation += randomSpin; // Ensure final rotation value is saved
+            canvas.style.transform = `rotate(${currentRotation}deg)`; // Snap the rotation to final angle
             determineWinner();
         }
     });
 }
+
 
 function determineWinner() {
     if (names.length === 0) return;
@@ -99,7 +105,8 @@ function determineWinner() {
     const index = Math.floor((360 - alignment) / anglePerSlice);
 
     // Show the result
-    alert(`Eliminated: ${names[index]} at index ${index}, final angle: ${finalAngle}. Names list: ${names}. Current Rotation: ${currentRotation}. Angle per slice: ${anglePerSlice}. Alignment: ${alignment}`);
+    // alert(`Eliminated: ${names[index]} at index ${index}, final angle: ${finalAngle}. Names list: ${names}. Current Rotation: ${currentRotation}. Angle per slice: ${anglePerSlice}. Alignment: ${alignment}`);
+    alert(`Eliminated: ${names[index]}! You're Safe! 😅`);
 
     // Remove the eliminated name
     names.splice(index, 1);
@@ -107,13 +114,12 @@ function determineWinner() {
 
     // If only one name is left, declare the winner
     if (names.length === 1) {
-        alert(`Winner: ${names[0]}! 🎉`);
+        alert(`${names[0]}, You WIN! 🎉`);
         drawWheel();
     } else {
-        // Reset rotation for the next spin to start from 0 degrees
-        currentRotation = 0;
-        // Reset the actual visual rotation of the canvas
-        canvas.style.transform = `rotate(0deg)`;
+        // Don't reset currentRotation to 0 here!
+        // Instead, allow it to accumulate so the next spin continues from the last angle.
+        // Only reset the canvas visual rotation after the wheel is drawn and updated.
         drawWheel();
     }
 }
