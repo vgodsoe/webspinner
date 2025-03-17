@@ -1,32 +1,150 @@
+/* General Body Styles */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-}
-canvas {
-    border: none;
-    margin-top: 20px;
-}
-button {
-    margin: 10px;
-    padding: 10px;
-    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
 }
 
-/* Add this CSS to your styles.css or within the <style> tag in your HTML */
+/* Heading Style */
+h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Input and Button Styles */
+#name-inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#name {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    width: 250px;
+}
+
+#name-inputs button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#name-inputs button:hover {
+    background-color: #45a049;
+}
+
+/* Name List Styles */
+#name-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    width: 300px;
+}
+
+#name-list li {
+    padding: 10px;
+    background-color: #fff;
+    margin: 5px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+#name-list li:hover {
+    background-color: #f1f1f1;
+}
+
+/* Wheel Container and Canvas Styles */
+.wheel-container {
+    position: relative;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
 .arrow {
     width: 0;
     height: 0;
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
-    border-top: 20px solid black;
+    border-top: 20px solid #333;
     position: absolute;
-    top: 50px; /* Adjust this value to position the arrow */
+    top: -30px;
     left: 50%;
     transform: translateX(-50%);
 }
 
-/* #wheel-container {
-    pointer-events: none;
-    margin-bottom: 20px;
-    overflow: hidden;
-} */
+#wheelCanvas {
+    width: 100%;
+    height: auto;
+    max-width: 400px; /* Ensure the canvas doesn't exceed a specific size */
+    border-radius: 50%;
+    border: 5px solid black;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Spin Button Style */
+#spinButton {
+    padding: 12px 25px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+#spinButton:hover {
+    background-color: #0056b3;
+}
+
+/* Mobile and Tablet Responsive Styles */
+@media screen and (max-width: 600px) {
+    h1 {
+        font-size: 1.5em; /* Smaller heading for mobile */
+    }
+
+    #name {
+        width: 80%; /* Adjust input width for smaller screens */
+    }
+
+    #name-list {
+        width: 80%; /* Adjust list width for smaller screens */
+    }
+
+    #name-inputs {
+        width: 80%; /* Adjust input form width for smaller screens */
+    }
+
+    .wheel-container {
+        width: 90%; /* Allow wheel container to scale on smaller screens */
+        max-width: 90%; /* Prevent exceeding the screen width */
+    }
+
+    #spinButton {
+        width: 80%; /* Adjust button width for smaller screens */
+    }
+}
