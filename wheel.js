@@ -114,7 +114,7 @@ function determineWinner() {
 
     // If only one name is left, declare the winner
     if (names.length === 1) {
-        alert(`${names[0]}, You WIN! 🎉`);
+        alert(`${names[0]}, You Lose! 💩`);
         drawWheel();
     } else {
         // Don't reset currentRotation to 0 here!
