@@ -64,30 +64,23 @@ function drawWheel() {
 }
 
 
-// Spin the wheel
 function spinWheel() {
     if (spinning || names.length === 0) return;
 
     spinning = true;
     let randomSpin = Math.floor(2000 + Math.random() * 3000);
 
-    gsap.to({}, {
-        duration: 2,
-        onUpdate: function() {
-            let progress = this.progress();
-            let rotation = currentRotation + progress * randomSpin;
-            canvas.style.transform = `rotate(${rotation}deg)`; // Visual spin
-        },
-        ease: "power4.out",
+    gsap.to(canvas, {
+        duration: 4,
+        rotate: `${currentRotation + randomSpin}deg`, // Let GSAP handle rotation
+        ease: "power4.out", // Smooth deceleration
         onComplete: function() {
             spinning = false;
-            currentRotation += randomSpin; // Ensure final rotation value is saved
-            canvas.style.transform = `rotate(${currentRotation}deg)`; // Snap the rotation to final angle
+            currentRotation += randomSpin; // Update the rotation value
             determineWinner();
         }
     });
 }
-
 
 function determineWinner() {
     if (names.length === 0) return;
